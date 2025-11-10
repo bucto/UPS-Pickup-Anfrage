@@ -4,7 +4,7 @@
 # Description: Loads all job-related values from the MySQL database into variables.
 # ==============================================================================
 
-Get_Data() {
+get_data() {
   echo "Reading data for Job ID: $x"
 
   local query_fields=(
@@ -32,3 +32,4 @@ Get_Data() {
     eval "${field^^}=\"\$value\""
   done
 }
+
