@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-# Function: Get_Data
+# Function: get_data 
 # Description: Loads all job-related values from the MySQL database into variables.
 # ==============================================================================
 
@@ -32,4 +32,5 @@ get_data() {
     eval "${field^^}=\"\$value\""
   done
 }
+
 
