@@ -8,53 +8,48 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# ========================= Configuration Parameters ==========================
-# Global config variables (UPPERCASE)
-PROJECT_FOLDER="ENTER_YOUR_FOLDER_NAME"
+PROJECT_FOLDER="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_NAME="UPS-Pickup-Anfrage"
-LOG_FILE="$PROJECT_FOLDER/logs/ups_pickup.log"
 
-# ========================== Include Config Files =============================
-CONFIG_DIR="$PROJECT_FOLDER/Config"
+echo "Projektpfad erkannt: $PROJECT_FOLDER"
 
-if [ -d "$CONFIG_DIR" ]; then
-    for file in "$CONFIG_DIR"/*.sh; do
-        [ -e "$file" ] || continue
-        echo "Loading config from: $file"
-        source "$file"
-    done
+# --- Load configuration ---
+CONFIG_FILE="$PROJECT_FOLDER/Config/config.sh"
+if [ -r "$CONFIG_FILE" ]; then
+    source "$CONFIG_FILE"
 else
-    echo "ERROR -> Config directory '$CONFIG_DIR' not found!"
+    echo "ERROR -> Config file not found at: $CONFIG_FILE"
     exit 1
 fi
 
-# ========================= Include Function Files ============================
+# --- Load functions ---
 FUNCTIONS_DIR="$PROJECT_FOLDER/Functions"
-
 if [ -d "$FUNCTIONS_DIR" ]; then
     for file in "$FUNCTIONS_DIR"/*.sh; do
         [ -e "$file" ] || continue
-        echo "Loading functions from: $file"
+        echo "Loading function: $file"
         source "$file"
     done
 else
-    echo "ERROR -> Functions directory '$FUNCTIONS_DIR' not found!"
+    echo "ERROR -> Functions directory not found: $FUNCTIONS_DIR"
     exit 1
 fi
+
+
 
 # =============================== Main Job ===================================
 echo "Starting UPS Pickup Job at $(date +%Y-%m-%d\ %H:%M:%S)" | tee -a "$LOG_FILE"
 
 # Step 1: Optimize database
 echo "Optimizing database..." | tee -a "$LOG_FILE"
-mysql -u"$WEBSITE_DB_USERNAME" -p"$WEBSITE_DB_PASSWORD" -h"$WEBSITE_DB_HOSTNAME" "$WEBSITE_DB_DATABASE" < "$PROJECT_FOLDER/sql/00_Optimize.sql"
+mysql -u"$SQL_DB_USERNAME" -p"$SQL_DB_PASSWORD" -h"$SQL_DB_HOSTNAME" "$SQL_DB_DATABASE" < "$PROJECT_FOLDER/sql/00_Optimize.sql"
 
 # Step 2: Load new jobs
 echo "Loading new jobs..." | tee -a "$LOG_FILE"
 JOB_LIST_FILE="$PROJECT_FOLDER/temp/job_list.txt"
-mysql --skip-column-names -u"$WEBSITE_DB_USERNAME" -p"$WEBSITE_DB_PASSWORD" -h"$WEBSITE_DB_HOSTNAME" "$WEBSITE_DB_DATABASE" < "$PROJECT_FOLDER/sql/01_LoadNewJobs.sql" > "$JOB_LIST_FILE"
+mysql --skip-column-names -u"$SQL_DB_USERNAME" -p"$SQL_DB_PASSWORD" -h"$SQL_DB_HOSTNAME" "$SQL_DB_DATABASE" < "$PROJECT_FOLDER/sql/01_LoadNewJobs.sql" > "$TEMP_JOB_LIST"
 
-readarray -t jobs < "$JOB_LIST_FILE"
+readarray -t jobs < "$TEMP_JOB_LIST"
 
 # Step 3: Process jobs
 for job_id in "${jobs[@]}"; do
