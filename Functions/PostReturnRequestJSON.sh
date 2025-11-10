@@ -16,7 +16,4 @@ if [ -s "$TEMP_JSON_PICKUPRESULT" ]; then
 else
   echo "❌ Fehler: Keine Antwort vom Pickup-Service!"
 fi
-
-	cat $TEMP_JSON_PICKUPRESULT
-
 }
