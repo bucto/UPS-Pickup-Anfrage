@@ -9,7 +9,7 @@ get_token() {
 
   local TOKEN_FILE="$PROJECT_FOLDER/temp/token.json"
 
-  curl -s -X POST "https://onlinetools.ups.com/security/v1/oauth/token" \
+  curl -s -X POST "$UPS_TOKEN_URL" \
     -u "$UPS_CLIENT_ID:$UPS_CLIENT_SECRET" \
     -H "Content-Type: application/x-www-form-urlencoded" \
     -d "grant_type=client_credentials" \
@@ -24,5 +24,6 @@ get_token() {
 
   echo "Access token retrieved successfully."
 }
+
 
 
