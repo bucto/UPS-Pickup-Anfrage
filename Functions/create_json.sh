@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-# Function: Create_JSON
+# Function: create_json
 # Description: Creates the JSON payload for UPS Pickup Creation Request.
 # ==============================================================================
 
@@ -59,4 +59,5 @@ EOF
 
   echo "JSON request created: $TEMP_JSON_PICKUPREQUEST"
 }
+
 
