@@ -14,7 +14,7 @@ create_json() {
     "Shipper": {
       "Account": {
         "AccountNumber": "$UPS_ACCOUNT",
-        "AccountCountryCode": "$COUNTRY"
+        "AccountCountryCode": "$UPS_ACCOUNT_COUNTRY"
       }
     },
     "PickupDateInfo": {
@@ -59,5 +59,6 @@ EOF
 
   echo "JSON request created: $TEMP_JSON_PICKUPREQUEST"
 }
+
 
 
