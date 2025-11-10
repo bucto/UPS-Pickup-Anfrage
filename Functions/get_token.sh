@@ -4,7 +4,7 @@
 # Description: Retrieves and caches the UPS OAuth access token.
 # ==============================================================================
 
-get_token () {
+get_token() {
   echo "Requesting UPS access token..."
 
   local TOKEN_FILE="$PROJECT_FOLDER/temp/token.json"
@@ -24,4 +24,5 @@ get_token () {
 
   echo "Access token retrieved successfully."
 }
+
 
