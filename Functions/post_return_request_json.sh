@@ -1,10 +1,10 @@
 #!/bin/bash
 # ==============================================================================
-# Function: Post_ReturnRequestJSON
+# Function: post_return_request_json
 # Description: Sends the pickup request JSON to the UPS API.
 # ==============================================================================
 
-Post_ReturnRequestJSON() {
+post_return_request_json() {
   echo "Sending pickup request for job $x..."
 
   TEMP_JSON_PICKUPRESULT="$WORK_FOLDER/JSON_RESPONSE/$x.json"
@@ -17,3 +17,4 @@ Post_ReturnRequestJSON() {
 
   echo "UPS response saved: $TEMP_JSON_PICKUPRESULT"
 }
+
