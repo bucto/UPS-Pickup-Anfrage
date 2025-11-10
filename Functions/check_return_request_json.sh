@@ -4,7 +4,7 @@
 # Description: Evaluates the UPS API response and updates the database.
 # ==============================================================================
 
-Check_ReturnRequestJSON() {
+check_return_request_json() {
   echo "Evaluating UPS response..."
 
   local STATUS
@@ -22,3 +22,4 @@ Check_ReturnRequestJSON() {
       -e "UPDATE tx_ups_retoure_job SET transfered='1', response_status='ERROR', error='1', response_information='$ERROR_MSG' WHERE uid=$x;"
   fi
 }
+
