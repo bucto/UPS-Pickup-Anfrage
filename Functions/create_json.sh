@@ -4,7 +4,7 @@
 # Description: Creates the JSON payload for UPS Pickup Creation Request.
 # ==============================================================================
 
-Create_JSON() {
+create_json() {
   TEMP_JSON_PICKUPREQUEST="$PROJECT_FOLDER/JSON_REQUEST/$x.json"
 
   cat > "$TEMP_JSON_PICKUPREQUEST" <<EOF
@@ -59,3 +59,4 @@ EOF
 
   echo "JSON request created: $TEMP_JSON_PICKUPREQUEST"
 }
+
