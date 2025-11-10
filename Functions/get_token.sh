@@ -1,10 +1,10 @@
 #!/bin/bash
 # ==============================================================================
-# Function: Get_Token
+# Function: get_token
 # Description: Retrieves and caches the UPS OAuth access token.
 # ==============================================================================
 
-Get_Token() {
+get_token () {
   echo "Requesting UPS access token..."
 
   local TOKEN_FILE="$PROJECT_FOLDER/temp/token.json"
@@ -24,3 +24,4 @@ Get_Token() {
 
   echo "Access token retrieved successfully."
 }
+
